@@ -6,14 +6,14 @@ using namespace sf;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(512, 512), "OOP_Project");
-	sf::Event evnt;
+	RenderWindow window(VideoMode(512, 512), "OOP_Project");
+	Event evnt;
 
 	while (window.isOpen())
 	{
 		while (window.pollEvent(evnt))
 		{
-			if (evnt.type == sf::Event::Closed)
+			if (evnt.type == Event::Closed)
 			{
 				window.close();
 			}
