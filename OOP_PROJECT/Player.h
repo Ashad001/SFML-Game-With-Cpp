@@ -1,18 +1,17 @@
 #pragma once
 
+#include "Grid.h"
 #include <SFML/Graphics.hpp>
 
-class Player : sf::Transformable , sf::Drawable
+class Player : public Grid
 {
 private:
 	sf::RectangleShape Body;
-	sf::Vector2f BodySize;
-	sf::Vector2f Velocity;
-
 
 public:
-	Player(sf::RenderWindow m_window, float DeltaTime);
-
-
+	Player(float GridSize);
+	void MovePlayer();
+	void Draw(sf::RenderWindow *i_window);
+	~Player();
 };
 

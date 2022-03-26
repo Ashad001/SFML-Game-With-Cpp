@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Grid.h"
+#include "Player.h"
 using namespace std;
 
 int main()
@@ -7,13 +8,21 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 800), "OOP-PROJECT");
 
 	float GridSize = 50.f;
-	Grid grids(GridSize);
-	grids.SetGrids();
+	Player player(GridSize);
 
+	int move = 0;
 	
 	while (window.isOpen())
 	{
-		grids.SelectGridTile(window);
+		if (move < 140)
+		{
+			move++;
+		}
+		else
+		{
+			player.MovePlayer();
+			move = 0;
+		}
 		sf::Event evnt;
 		while (window.pollEvent(evnt))
 		{
@@ -32,7 +41,7 @@ int main()
 
 
 		window.clear(sf::Color::Black);
-		grids.DrawGrids(window);
+		player.Draw(&window);
 		window.display();
 
 
