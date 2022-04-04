@@ -3,14 +3,17 @@
 using namespace std;
 class Grid
 {
+protected:
+	int MapSize;
 private:
 	float GridSize;
 	sf::Vector2u MouseGridPos;
-	sf::Vector2i MouseWindowPos;
-	sf::RectangleShape SelectTile;
-	sf::RectangleShape Tiles[20 * 20];
+	sf::Vector2i MouseWindowPos;	
+
+
+	sf::RectangleShape Tiles[40 * 40];
+	
 protected:
-	int MapSize;
 	int tileNumber_X;
 	int tileNumber_Y;
 public:

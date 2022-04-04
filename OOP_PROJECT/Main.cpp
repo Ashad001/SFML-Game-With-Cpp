@@ -7,14 +7,14 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 800), "OOP-PROJECT");
 
-	float GridSize = 50.f;
+	float GridSize = 30.76f;
 	Player player(GridSize);
 
 	int move = 0;
-	
+
 	while (window.isOpen())
 	{
-		if (move < 140)
+		if (move < 70)
 		{
 			move++;
 		}
@@ -36,14 +36,9 @@ int main()
 				window.setView(sf::View(viewsize));
 			}
 		}
-		
-
-
 
 		window.clear(sf::Color::Black);
 		player.Draw(&window);
 		window.display();
-
-
 	}
 }

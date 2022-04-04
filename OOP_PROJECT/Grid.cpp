@@ -5,12 +5,12 @@ using namespace std;
 Grid::Grid(float gridSize)
 {
 	this->GridSize = gridSize;
-	this->MapSize = 16;
+	this->MapSize = 26;
 	//Tile
-
+	
 	this->tileNumber_X = 0;
 	this->tileNumber_Y = 0;
-	SetGrids();
+
 
 
 }
@@ -33,9 +33,13 @@ void Grid::SetGrids()
 
 void Grid::DrawGrids(sf::RenderWindow& i_window)
 {
+
+	
+
 	for (int i = 0; i < MapSize * MapSize; i++)
 	{
 		i_window.draw(Tiles[i]);
+		
 	}
 }
 

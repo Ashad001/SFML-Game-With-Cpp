@@ -6,7 +6,9 @@ Player::Player(float GridSize) : Grid(GridSize)
 	this->Body.setOutlineColor(sf::Color::Red);
 	this->Body.setOutlineThickness(1.f);
 	this->Body.setSize(sf::Vector2f(GetGridSize(), GetGridSize()));
+
 	SetGrids();
+
 }
 
 void Player::MovePlayer()
