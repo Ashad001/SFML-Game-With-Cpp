@@ -13,7 +13,6 @@ Player::Player(float GridSize) : Grid(GridSize)
 
 void Player::MovePlayer()
 {
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		tileNumber_Y--;
