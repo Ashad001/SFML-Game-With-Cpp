@@ -1,69 +1,119 @@
-#include <conio.h>
-#include "Game.h"
-#include <ctype.h>
-int main()
-{
-	Game Amazer;
-	Amazer.Run();
-}
+#include <SFML/Graphics.hpp>
+#include "MainMenu.h"
 
-/*
-#include <iostream>
-#include <fstream>
 using namespace std;
 
-// int main(int argc, char const *argv[])
-// {
-//     typedef int i;
-//     i var = 5;
-//     cout << var;
+int main() {
+	sf::RenderWindow MENU(sf::VideoMode(800, 600), "Main Menu",sf::Style::Default);
+	MainMenu mainMenu(MENU.getSize().x, MENU.getSize().y);
 
-//     return 0;
-// }
+	while (MENU.isOpen())
+	{
+		sf::Event event;
+		while (MENU.pollEvent(event))
+		{
+			if (event.type==sf::Event::Closed)
+			{
+				MENU.close();
+			}
+			if (event.type==sf::Event::KeyReleased||event.type==sf::Event::MouseButtonPressed)
+			{
+				if (event.key.code==sf::Keyboard::Up)
+				{
+					mainMenu.MoveUp();
+					break;
+				}
+				if (event.key.code==sf::Keyboard::Down)
+				{
+					mainMenu.MoveDown();
+					break;
+				}
+				if (event.key.code==sf::Keyboard::Return)
+				{
+					int x = mainMenu.MainMenuPressed();
+					if (x==0)
+					{
+					sf::RenderWindow Play(sf::VideoMode(800, 600), "Amazer");
+						while (Play.isOpen())
+						{
+							MENU.close(); 
+							sf::Event pevent;
+							while (Play.pollEvent(pevent)) {
+								if (pevent.type==sf::Event::Closed)
+								{
+									Play.close();
+								}
+								if (pevent.type==sf::Event::KeyPressed)
+								{
+									if (pevent.key.code==sf::Keyboard::Escape) {
+										MENU.create(sf::VideoMode(800, 600), "Main Menu", sf::Style::Default);
+										Play.close();
+									}
+								}
+							}
+							Play.clear();
+							Play.display();
+						}
+					}
+					if (x == 1)
+					{
+					sf::RenderWindow Options(sf::VideoMode(800, 600), "Options");
+						while (Options.isOpen())
+						{
+							MENU.close();
+							sf::Event pevent;
+							while (Options.pollEvent(pevent)) {
+								if (pevent.type == sf::Event::Closed)
+								{
+									Options.close();
+								}
+								if (pevent.type == sf::Event::KeyPressed)
+								{
+									if (pevent.key.code == sf::Keyboard::Escape) {
+										MENU.create(sf::VideoMode(800, 600), "Main Menu", sf::Style::Default);
+										Options.close();
+									}
+								}
+							}
+							Options.clear();
+							Options.display();
+						}
+					}
+					if (x == 2)
+					{
+					sf::RenderWindow About(sf::VideoMode(800, 600), "About");
+						while (About.isOpen())
+						{
+							MENU.close();
+							sf::Event pevent;
+							while (About.pollEvent(pevent)) {
+								if (pevent.type == sf::Event::Closed)
+								{
+									About.close();
+								}
+								if (pevent.type == sf::Event::KeyPressed)
+								{
+									if (pevent.key.code == sf::Keyboard::Escape) {
+										MENU.create(sf::VideoMode(800, 600), "Main Menu", sf::Style::Default);
+										About.close();
+									}
+								}
+							}
+							About.clear();
+							About.display();
+						}
+					}
+					if (x == 3)
+					{
+						MENU.close();
+					}
+				}
+			}
+		}
+		MENU.clear();
+		mainMenu.draw(MENU);
+		MENU.display();
+	}
 
-// int main()
-// {
-//     char *word = "HELLO";
-//     cout << word << endl << &word << endl;
-//     cout << static_cast<void*>(word);
-// }
-
-int main(int argc, char const* argv[])
-{
-    string path = "D:\\test.txt"; // If created then open if not created and then open
-    ofstream o(path); // writing purpose
-    o.put('T');
-    o.close();
-
-    //ifstream i(path);   // Reading purpose
-    //char c = i.get();
-    //cout << c << endl;
-    //i.close();
-
-    ofstream o2(path); // writing purpose
-
-    o2.write("This is" , 7);
-    o2.close();
-
-    //ifstream i(path);
-    //char* outputTxt = new char[10];
-    //i.read(outputTxt, 7); // 7 characters of file are in outputTxt
-    //cout << outputTxt << endl;
-
-    char c;
-    ifstream i(path);
-    char t;
-    while (!i.eof())
-    {
-        i.get(t);
-        if (!(t == 'x'))
-            i.get(c);
-        if(!i.eof())
-           cout << t << c << endl;
-    }
-   
-    i.close();
-
-    return 0;
+	return 0;
 }
-*/
