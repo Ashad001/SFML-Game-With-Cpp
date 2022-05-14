@@ -3,13 +3,14 @@
 void Game::SetWindow()
 {
 	this->Window = new sf::RenderWindow(sf::VideoMode(800, 640), "OOP-PROJECT");
+	this->Window->setFramerateLimit(120);
 }	
 Game::Game()
 {
 	SetWindow();
 	grids = new Grid;
 	grids->SetGrids();
-	player = new Player(this->grids->GetGridSize());
+	player = new Player(this->grids->GetGridSize(), *Window);
 }
 
 Game::~Game()
@@ -48,12 +49,8 @@ void Game::UpdateDT()
 void Game::Update()
 {
 	UpdateEvents();
-	this->moves++;
-	if (moves > 70)
-	{
-		this->player->MovePlayer(this->DeltaTime);
-		moves = 0;
-	}
+	//UpdateDT();
+	this->player->MovePlayer(this->DeltaTime);
 }
 
 void Game::Render()

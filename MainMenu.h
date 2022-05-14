@@ -4,6 +4,7 @@
 using namespace std;
 
 #define Max_main_menu 4
+
 class MainMenu
 {
 private:
@@ -23,4 +24,3 @@ public:
 		return MainMenuSelected;
 	}
 };
-

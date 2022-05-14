@@ -11,7 +11,7 @@ Animation::Animation(sf::Texture* i_Tex, sf::Vector2u ImageCnt, float SwitchTm)
 	uvRect.height = i_Tex->getSize().y / float(imageCount.y);
 }
 
-void Animation::Update(int row, float Deltatime)
+void Animation::Update(int row, float Deltatime, bool isRight = true)
 {
 	currentImage.y = row;
 	TotalTime += Deltatime;
@@ -24,6 +24,15 @@ void Animation::Update(int row, float Deltatime)
 			currentImage.x = 0;
 		}
 	}
-	uvRect.left = currentImage.x * abs(uvRect.width);
 	uvRect.top = currentImage.y * abs(uvRect.height);
+	if (isRight)
+	{
+		uvRect.left = currentImage.x * abs(uvRect.width);
+		uvRect.width = abs(uvRect.width);
+	}
+	else
+	{
+		uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
+		uvRect.width = -abs(uvRect.width);
+	}
 }

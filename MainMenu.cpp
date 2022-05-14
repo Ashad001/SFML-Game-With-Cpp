@@ -5,7 +5,7 @@ MainMenu::MainMenu(float width, float height) {
 	{
 		cout << "Font Avalaible..!";
 	}
-	
+
 	//Play Button
 	mainMenu[0].setFont(font);
 	mainMenu[0].setFillColor(sf::Color::White);
@@ -47,12 +47,11 @@ void MainMenu::draw(sf::RenderWindow& window) {
 
 //MoveUp
 void MainMenu::MoveUp() {
-	if (MainMenuSelected-1>=0)
+	if (MainMenuSelected - 1 >= 0)
 	{
 		mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
 		MainMenuSelected--;
-
-		if (MainMenuSelected==-1)
+		if (MainMenuSelected == -1)
 		{
 			MainMenuSelected = 2;
 		}
@@ -63,12 +62,12 @@ void MainMenu::MoveUp() {
 //MoveDown
 
 void MainMenu::MoveDown() {
-	if (MainMenuSelected+1<=Max_main_menu)
+	if (MainMenuSelected + 1 <= Max_main_menu)
 	{
 		mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
 		MainMenuSelected++;
 
-		if (MainMenuSelected==Max_main_menu)
+		if (MainMenuSelected == Max_main_menu)
 		{
 			MainMenuSelected = 0;
 		}

@@ -11,6 +11,7 @@ private:
 public:
 	sf::IntRect uvRect;
 	Animation(sf::Texture* i_Tex, sf::Vector2u ImageCnt, float SwitchTm);
-	void Update(int row, float Deltatime);
+	void Update(int row, float Deltatime, bool isRight);
 };
+
 
