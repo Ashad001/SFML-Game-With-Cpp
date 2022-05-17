@@ -3,6 +3,7 @@
 void Game::SetWindow()
 {
 	this->Window = new sf::RenderWindow(sf::VideoMode(800, 640), "OOP-PROJECT");
+	this->Camera = new sf::View(sf::Vector2f(400.f, 200.f), sf::Vector2f(400, 320)); // This is centre and size of the camera but will be updated later
 	this->Window->setFramerateLimit(120);
 }	
 Game::Game()
@@ -68,6 +69,10 @@ void Game::Run()
 	{
 		this->UpdateDT();
 		this->Update();
+	 	this->Camera->setCenter(player->GetPlayerPosition());
+		this->player->SetView(Camera);
+	//	this->Camera->setSize(Window->getSize().x, Window->getSize().y);
+		this->Window->setView(*Camera);
 		this->Render();
 
 

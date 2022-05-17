@@ -17,6 +17,7 @@ class Game
 private:
 	// Attributes
 	sf::RenderWindow* Window;
+	sf::View* Camera;
 	sf::Event EVNT;
 	sf::Clock DTClock;
 	float DeltaTime;

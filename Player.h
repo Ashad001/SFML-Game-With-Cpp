@@ -13,6 +13,7 @@ private:
 	Grid* grids;
 	sf::Texture playerTex;
 	sf::Sprite body;
+	bool IsDead;
 	Animation* playerAnimation;
 	float PlayerMovementSpeed;
 	sf::Vector2f velocity;
@@ -25,7 +26,9 @@ public:
 	void MovePlayer(const float& DT);
 	void CheckCollision(float location_x, float location_y);
 	void Draw(sf::RenderWindow& i_window);
+	sf::Vector2f GetPlayerPosition();
 	sf::FloatRect SetHitBox();
+	void SetView(sf::View* view);
 
 	~Player();
 };

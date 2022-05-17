@@ -36,11 +36,11 @@ void Grid::DrawGrids(sf::RenderWindow& i_window)
 	i_window.draw(*Map);
 	for (int i = 0; i < MapSize * MapSize; i++)
 	{
-		i_window.draw(Tiles[i]);
+		//i_window.draw(Tiles[i]);
 	}
 }
 
-
+	
 const float& Grid::GetGridSize() const
 {
 	return GridSize;

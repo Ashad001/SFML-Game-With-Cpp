@@ -7,6 +7,69 @@ int main()
 }
 
 
+//#include <iostream>
+//#include <fstream>
+//using namespace std;
+//
+//int main(int argc, char const* argv[])
+//{
+//    string path = "C:\\Users\\Ashad Qureshi\\OneDrive - FAST National University\\Documents\\UNI\\Custom codes\\Sec\\Class Codes\\week7.cp.txt";
+//
+//    const char* input = "This is input";
+//
+//    ofstream o(path);
+//    o.write(input, strlen(input));
+//    o.close();
+//    
+//
+//    char* output = new char[50];
+//    // Read 10 characters 
+//    ifstream i(path);
+//    i.seekg(4, ios::beg);    // cursor pointer will be in beginnning at reads 4 characters from their...
+//    i.read(output, 10);            // Means that now 4 characters excludedly the read function will read---> is input (random ascii value)
+//    for (int i = 0; i < 10; i++)
+//        cout << output[i] << " ";
+//    cout << endl;
+//
+//     // cursor pointer will be in beginnning at reads 4 characters from their...
+//    i.seekg(-1, ios::cur);
+//    i.read(output, 10);
+//    for (int i = 0; i < 10; i++)
+//        cout << output[i] << " ";
+//    cout << endl;
+//    i.close();
+//
+//    return 0;
+//}
+//#include <iostream>
+//#include <fstream>
+//using namespace std;
+//
+//int main(int argc, char const* argv[])
+//{
+//    string path = "C:\\Users\\Ashad Qureshi\\OneDrive - FAST National University\\Documents\\UNI\\Custom codes\\Sec\\Class Codes\\week7.cp.txt";
+//
+//    const char* input = "This is input";
+//
+//    ofstream o(path);
+//    o.seekp(5, ios::beg);
+//    o.write(input, strlen(input));
+//    o.close();
+//
+//
+//    char* output = new char[50];
+//    // Read 10 characters 
+//    ifstream i(path);
+//    i.read(output, 20);            // Means that now 4 characters excludedly the read function will read---> is input (random ascii value)
+//    for (int i = 0; i < 20; i++)
+//        cout << output[i] << " ";
+//    cout << endl;
+//
+//    return 0;
+//}
+
+
+
 ///*
 //#include <iostream>
 //#include <fstream>
