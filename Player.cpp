@@ -34,10 +34,12 @@ void Player::MovePlayer(const float& DT)
 	velocity = { 0.f , 0.f };
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
+		playerAnimation->Update(0, DT, isRight);
 		velocity.y += -this->PlayerMovementSpeed * DT;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
+		playerAnimation->Update(0, DT, isRight);
 		velocity.y += this->PlayerMovementSpeed * DT;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))

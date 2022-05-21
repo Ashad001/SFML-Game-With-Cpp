@@ -6,6 +6,98 @@ int main()
 	Amazer.Run();
 }
 
+//#include <iostream>
+//#include <fstream>
+//using namespace std;
+//
+//class A
+//{
+//private:
+//    int x;
+//public:
+//    A()
+//    {
+//
+//    }
+//    A(int x)
+//    {
+//        this->x = x;
+//    }
+//    void Display()
+//    {
+//        cout << "thdsd " << x << endl;
+//    }
+//
+//
+//};
+//
+//
+//int main(int argc, char const* argv[])
+//{
+//    string path = "D:\\test.bin";
+//    A ob1(3);
+//    A ob2(5);
+//    A ob3;
+//
+//    ofstream o(path);
+//    o.write((char*)&ob1, sizeof(ob1));
+//    o.write((char*)&ob2, sizeof(ob2));
+//    o.close();
+//    ifstream i(path);
+//    /*for (int J = 0; J < 2; J++)
+//    {
+//        i.read((char*)&ob3, sizeof(ob3));
+//        ob3.Display();
+//        cout << endl;
+//    }
+//        i.close();*/
+//    
+//    i.seekg(sizeof(ob1), ios::beg);
+//    i.read((char*)&ob3, sizeof(ob3));
+//    i.close();
+//
+//    ob3.Display();
+//
+//    return 0;
+//}
+
+
+//#include <iostream>
+//#include <fstream>
+//#include <string>
+//#include <string.h>
+//using namespace std;
+//
+//int main()
+//{
+//	string path = "C:\\Users\\Ashad Qureshi\\OneDrive - FAST National University\\Documents\\UNI\\Custom codes\\Sec\\Class Codes\\week7.cp.txt";
+//	char* input = (char*)"This is input string";
+//
+//	ofstream o(path);
+//	o.seekp(4, ios::beg);  // jump number, origin to start
+//	o.write(input, strlen(input));
+//
+//	o.close();
+//
+//	ifstream i(path);
+//	char* output = new char[10];
+//	//i.seekg(4, ios::beg);
+////	i.seekg(4, ios::end); // Starting from end .. but will give garbage as it has not any value...
+//	//i.seekg(-4, ios::end); // starting from end but jump in reverse four places
+////	char c = i.get();  // now pointer has been incremented to 'h'
+//////	i.seekg(4, ios::beg);  // start from start
+////	i.seekg(5, ios::cur); // start from current pointer 'h'
+//
+//
+// 	i.read(output, 5);
+//	for (int i = 0; i < 5; i++)
+//	{
+//		cout << output[i] << " ";
+//	}
+//	i.close();
+//}
+
+
 
 //#include <iostream>
 //#include <fstream>

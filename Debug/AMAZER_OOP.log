@@ -1,13 +1,6 @@
-﻿  Player.cpp
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(21,76): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(89,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(90,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(107,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(108,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(115,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(116,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(123,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(124,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(131,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\AMAZER_OOP\AMAZER_OOP\Player.cpp(132,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  Grid.cpp
+D:\AMAZER_OOP\AMAZER_OOP\Grid.cpp(58,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+D:\AMAZER_OOP\AMAZER_OOP\Grid.cpp(59,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Main.cpp
+  Generating Code...
   AMAZER_OOP.vcxproj -> D:\AMAZER_OOP\Debug\AMAZER_OOP.exe
