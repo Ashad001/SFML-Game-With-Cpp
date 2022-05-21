@@ -5,7 +5,7 @@ MainMenu::MainMenu(float width, float height) {
 	{
 		cout << "Font Avalaible..!";
 	}
-
+	
 	//Play Button
 	mainMenu[0].setFont(font);
 	mainMenu[0].setFillColor(sf::Color::White);
@@ -47,11 +47,12 @@ void MainMenu::draw(sf::RenderWindow& window) {
 
 //MoveUp
 void MainMenu::MoveUp() {
-	if (MainMenuSelected - 1 >= 0)
+	if (MainMenuSelected-1>=0)
 	{
 		mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
 		MainMenuSelected--;
-		if (MainMenuSelected == -1)
+
+		if (MainMenuSelected==-1)
 		{
 			MainMenuSelected = 2;
 		}
@@ -62,15 +63,83 @@ void MainMenu::MoveUp() {
 //MoveDown
 
 void MainMenu::MoveDown() {
-	if (MainMenuSelected + 1 <= Max_main_menu)
+	if (MainMenuSelected+1<=Max_main_menu)
 	{
 		mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
 		MainMenuSelected++;
 
-		if (MainMenuSelected == Max_main_menu)
+		if (MainMenuSelected==Max_main_menu)
 		{
 			MainMenuSelected = 0;
 		}
 		mainMenu[MainMenuSelected].setFillColor(sf::Color::Blue);
 	}
+}
+
+void MainMenu::Update(){
+	sf::RenderWindow MENU(sf::VideoMode(800, 600), "Main Menu", sf::Style::Default);
+	MainMenu mainMenu(MENU.getSize().x, MENU.getSize().y);
+
+	sf::RectangleShape Background;
+	Background.setSize(sf::Vector2f(800, 600));
+	sf::Texture MainTexture;
+	MainTexture.loadFromFile("ground.jpg");
+	Background.setTexture(&MainTexture);
+	Game* Amazer;
+	while (MENU.isOpen())
+	{
+		sf::Event event;
+		while (MENU.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				MENU.close();
+			}
+			if (event.type == sf::Event::KeyReleased || event.type == sf::Event::MouseMoved)
+			{
+				sf::Mouse::setPosition(sf::Vector2i(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
+				if (event.key.code == sf::Keyboard::Up)
+				{
+					mainMenu.MoveUp();
+					break;
+				}
+				if (event.key.code == sf::Keyboard::Down)
+				{
+					mainMenu.MoveDown();
+					break;
+				}
+				if (event.key.code == sf::Keyboard::Return || event.key.code == sf::Mouse::Left)
+				{
+					int x = mainMenu.MainMenuPressed();
+					if (x == 0)
+					{
+						Amazer = new Game();
+						MENU.clear();
+						Amazer.UpdateEvents();
+						Amazer.Run();
+						if (event.key.code == sf::Keyboard::Escape) {
+							MENU.clear();
+							MENU.draw(Background);
+							mainMenu.draw(MENU);
+							MENU.display();
+						}
+					}
+					if (x == 1)
+					{
+					}
+					if (x == 2)
+					{
+
+						if (x == 3)
+						{
+							MENU.close();
+						}
+					}
+				}
+			}
+			MENU.clear();
+			MENU.draw(Background);
+			mainMenu.draw(MENU);
+			MENU.display();
+		}
 }
