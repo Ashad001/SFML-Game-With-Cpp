@@ -1,5 +1,5 @@
 #include "Bullet.h"
-Bullet::Bullet(float x,float y) {
+Bullet::Bullet(float x, float y) {
 	SetBulletSize(x, y);
 }
 void Bullet::fire(int speed) { //and in radius
@@ -28,8 +28,8 @@ void Bullet::moving(int speed) {
 	bullet.move(speed, 0);
 }
 
-void Bullet::SetBulletPosition(float x,float y) {
-	this->pos_x=x;
+void Bullet::SetBulletPosition(float x, float y) {
+	this->pos_x = x;
 	this->pos_y = y;
 }
 
@@ -37,7 +37,7 @@ void Bullet::SetBulletColor(sf::Color color) {
 	bullet.setFillColor(color);
 }
 
-void Bullet::SetBulletSize(float x=50.f, float y=5.f) {
+void Bullet::SetBulletSize(float x = 50.f, float y = 5.f) {
 	bullet.setSize(sf::Vector2f(x, y));
 }
 

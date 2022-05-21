@@ -1,5 +1,4 @@
 #pragma once
-
 #include <SFML/Graphics.hpp>
 class Bullet
 {
@@ -9,7 +8,7 @@ private:
 	float size_x, size_y;
 	float pos_x, pos_y;
 public:
-	Bullet(float x,float y);
+	Bullet(float x, float y);
 	void SetBulletSize(float x, float y);
 	void SetBulletColor(sf::Color color);
 	void SetBulletPosition(float x, float y);
@@ -22,4 +21,3 @@ public:
 	int getbottom();
 	void draw(sf::RenderWindow& window);
 };
-

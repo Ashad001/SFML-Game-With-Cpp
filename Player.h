@@ -4,13 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
 #include "Player.h"
-
-class Player
+#include "Entity.h"
+class Player : public Entity
 {
 private:
 	//sf::RectangleShape Body;
 	sf::Window *i_win;
-	Grid* grids;
 	sf::Texture playerTex;
 	sf::Sprite body;
 	bool IsDead;
@@ -22,7 +21,7 @@ private:
 	bool isRight;
 	sf::FloatRect playerNextMove;
 public:
-	Player(float GridSize, sf::Window& window);
+	Player(float GridSize, sf::Window& window, int level);
 	void MovePlayer(const float& DT);
 	void CheckCollision(float location_x, float location_y);
 	void Draw(sf::RenderWindow& i_window);

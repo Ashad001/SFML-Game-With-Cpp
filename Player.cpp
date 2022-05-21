@@ -10,10 +10,8 @@ void Player::SetClockTime()
 	}
 }
 
-Player::Player(float GridSize, sf::Window& window)  
+Player::Player(float GridSize, sf::Window& window, int level)  : Entity(window)
 {
-	this->i_win = &window;
-	grids = new Grid;
 	playerTex.loadFromFile("Textures/Ghost2.png");
 	playerTex.setSmooth(true);
 	this->body.setTexture(this->playerTex);
@@ -22,9 +20,9 @@ Player::Player(float GridSize, sf::Window& window)
 	isRight = true;
 	this->velocity = { 0.f, 0.f };
 	this->PlayerMovementSpeed = 200.f;
-	this->grids->SetGrids();
 	this->IsDead = true;
 	this->body.setOrigin(body.getGlobalBounds().width / 2, body.getGlobalBounds().height / 2);
+	this->grids->SelectLevel(level);
 }
 
 void Player::MovePlayer(const float& DT)
@@ -94,7 +92,7 @@ void Player::CheckCollision(float location_x,float location_y)
 	{
 		//cout << index << endl;
 
-		if(grids->LEVEL1[i] == 1)
+		if(grids->levels.levelarr[i] == 1)
 		{
 			sf::FloatRect TileBounds = this->grids->Tiles[i].getGlobalBounds();
 			sf::FloatRect PlayerBounds = this->SetHitBox();
@@ -139,7 +137,7 @@ void Player::CheckCollision(float location_x,float location_y)
 			}
 			index = index_x + (index_y * this->grids->GetMapSize());
 		}
-		else if (grids->LEVEL1[i] == 2)
+		else if (grids->levels.levelarr[i] == 2)
 		{
 			IsDead = 0;
 		}

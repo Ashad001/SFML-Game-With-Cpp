@@ -1,5 +1,20 @@
 #include "Grid.h"
 
+void Grid::SelectLevel(int level)
+{
+	levels.LevelSelect(level);
+	for (int i = 0; i < 400; i++)
+	{
+		tempLev[i] = levels.levelarr[i];
+		if (tempLev[i] == 4)
+		{
+			tempLev[i] = 0;
+		}
+	}
+	Map->load("Block.png", sf::Vector2u(32, 32), tempLev, 20, 20);
+
+}
+
 Grid::Grid()
 {
 	this->GridSize = 32;
@@ -9,7 +24,12 @@ Grid::Grid()
 	this->Location = 0;
 	//Tile
 	Map = new TileMap;
-	Map->load("Block.png", sf::Vector2u(32, 32), LEVEL1, 20, 20);
+	SelectLevel(1);
+
+	
+
+
+	
 }
 
 
@@ -52,13 +72,15 @@ const int& Grid::GetMapSize() const
 }
 
 
+
+
 int Grid::CheckCollision(float location_x, float location_y)
 {
 //	cout << Tiles->getGlobalBounds().height << " " << Tiles->getGlobalBounds().left << endl;
 	int index_x = floor(location_x / GridSize);
 	int index_y = floor(location_y / GridSize);
 	//cout << index_x << "   " << index_y << "  " << index_x + (index_y * this->MapSize) + 1  << endl;
-	if (LEVEL1[index_x + (index_y * this->MapSize)] == 1)
+	if (levels.levelarr[index_x + (index_y * this->MapSize)] == 1)
 	{
 		return index_x + (index_y * this->MapSize);
 	}

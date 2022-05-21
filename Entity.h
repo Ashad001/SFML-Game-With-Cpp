@@ -5,11 +5,10 @@ class Entity
 {
 private:		
 	sf::Window* i_win;
-	Grid* grids;
-	bool IsDead;
+
 public:
-	virtual void Draw() = 0;
-	virtual sf::FloatRect GetHitBox() = 0;
+	Grid* grids;
+
 	Entity(sf::Window & i_win);
 
 

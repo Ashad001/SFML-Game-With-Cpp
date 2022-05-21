@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "Grid.h"
 #include "Player.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -23,7 +24,10 @@ private:
 	float DeltaTime;
 	Grid *grids;
 	Player* player;
-	int moves;    
+	vector<Enemy> enemies;
+
+	int moves;   
+	//int EnemyCount; // Optimzed
 	
 	
 	// Private Setters
@@ -33,7 +37,7 @@ public:
 	Game();
 	virtual ~Game();
 
-
+	void SetEntites();
 	// Public Functions / Setters
 	void UpdateEvents();
 	void UpdateDT();

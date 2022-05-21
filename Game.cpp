@@ -3,7 +3,7 @@
 void Game::SetWindow()
 {
 	this->Window = new sf::RenderWindow(sf::VideoMode(800, 640), "OOP-PROJECT");
-	this->Camera = new sf::View(sf::Vector2f(400.f, 200.f), sf::Vector2f(400, 320)); // This is centre and size of the camera but will be updated later
+	this->Camera = new sf::View(sf::Vector2f(0, 0), sf::Vector2f(600, 480)); // This is centre and size of the camera but will be updated later
 	this->Window->setFramerateLimit(120);
 }	
 Game::Game()
@@ -11,7 +11,7 @@ Game::Game()
 	SetWindow();
 	grids = new Grid;
 	grids->SetGrids();
-	player = new Player(this->grids->GetGridSize(), *Window);
+	SetEntites();
 }
 
 Game::~Game()
@@ -19,6 +19,30 @@ Game::~Game()
 	delete this->Window;
 	delete this->grids;
 	delete this->player;
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies.pop_back();
+	}
+
+}
+
+void Game::SetEntites()
+{
+	player = new Player(this->grids->GetGridSize(), *Window, 2);
+	grids->SelectLevel(2);
+	for (int i = 0; i < 20; i++)
+	{
+		for (int j = 0; j < 20; j++)
+		{
+			if (grids->levels.levelarr[i + j * 20] == 4)
+			{
+				Enemy *tempenm = new Enemy(grids->GetGridSize(), *Window, sf::Vector2f(i * grids->GetGridSize(), j * grids->GetGridSize()));
+				enemies.push_back(*tempenm);				
+			}
+
+		}
+		
+	}
 }
 
 void Game::UpdateEvents()
@@ -52,6 +76,10 @@ void Game::Update()
 	UpdateEvents();
 	//UpdateDT();
 	this->player->MovePlayer(this->DeltaTime);
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies[i].UpdateEnemy(this->DeltaTime);
+	}
 }
 
 void Game::Render()
@@ -59,6 +87,10 @@ void Game::Render()
 	this->Window->clear(sf::Color::Black);
 	// Render / Drawing
 	this->grids->DrawGrids(*Window);
+	for (int i = 0; i < enemies.size(); i++)
+	{ 
+		enemies[i].Draw(*Window);
+	}
 	this->player->Draw(*Window);
 	this->Window->display();
 }
