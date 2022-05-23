@@ -5,7 +5,7 @@ Button::Button(sf::Vector2f Position, sf::Vector2f Size, sf::Font* font, string 
 	this->BottonBody.setPosition(Position);
 	this->BottonBody.setSize(Size);
 	this->BottonBody.setFillColor(sf::Color::Transparent);
-	
+
 	// buttomState: 0 for idle, 1 for hover, 2 for press
 	this->ButtonState = 0;
 
@@ -17,7 +17,7 @@ Button::Button(sf::Vector2f Position, sf::Vector2f Size, sf::Font* font, string 
 	this->HoverColor = HoverColor;
 	this->PressColor = PressColor;
 	this->text.setFillColor(IdleColor);
-	this->text.setPosition(this->BottonBody.getPosition().x + (this->BottonBody.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f, this->BottonBody.getPosition().y + (this->BottonBody.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f);		
+	this->text.setPosition(this->BottonBody.getPosition().x + (this->BottonBody.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f, this->BottonBody.getPosition().y + (this->BottonBody.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f);
 }
 Button::Button()
 {
@@ -65,4 +65,3 @@ int Button::GetButtonState()
 {
 	return this->ButtonState;          // Will return 2 if the button is pressed..!
 }
-

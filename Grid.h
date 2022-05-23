@@ -13,26 +13,24 @@ private:
 	int tileNumber_X, tileNumber_Y;
 	int Location;
 	sf::RectangleShape Tiles[20 * 20];
-	TileMap *Map;
+	TileMap* Map;
 	int tempLev[400] = { 0 };
 
 
-	
+
 
 public:
 
 	Level levels;
-	void SelectLevel(int level);
-	
+	void SelectLevel(int level, bool load);
+
 	Grid();
 	void SetGrids();
 	void DrawGrids(sf::RenderWindow& i_window);
 	const float& GetGridSize() const;
 	const int& GetMapSize() const;
-	void LoadMap();
 	int CheckCollision(float location_x, float location_y);
 	friend class Player;
 
 	~Grid();
 };
-

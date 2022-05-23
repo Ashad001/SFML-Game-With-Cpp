@@ -10,8 +10,9 @@ void Player::SetClockTime()
 	}
 }
 
-Player::Player(float GridSize, sf::Window& window, int level)  : Entity(window)
+Player::Player(float GridSize, sf::Window& window) : Entity(window)
 {
+	this->CurrentLevel = 1;
 	playerTex.loadFromFile("Textures/Ghost2.png");
 	playerTex.setSmooth(true);
 	this->body.setTexture(this->playerTex);
@@ -22,12 +23,15 @@ Player::Player(float GridSize, sf::Window& window, int level)  : Entity(window)
 	this->PlayerMovementSpeed = 200.f;
 	this->IsDead = true;
 	this->body.setOrigin(body.getGlobalBounds().width / 2, body.getGlobalBounds().height / 2);
-	this->grids->SelectLevel(level);
+	this->grids->SelectLevel(CurrentLevel, 0);
+	this->PlayerGridIndex = 0;
+	SetPlayerCurrentLevel(1);
+
 }
 
 void Player::MovePlayer(const float& DT)
 {
-	
+
 	body.setTextureRect(playerAnimation->uvRect);
 	velocity = { 0.f , 0.f };
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -59,15 +63,15 @@ void Player::MovePlayer(const float& DT)
 
 
 	//cout << body.getPosition().x << " " << body.getPosition().y << " " <<  i_win->getSize().x << endl;
-	
+
 	sf::FloatRect PlayerBounds = body.getGlobalBounds();
-	
+
 	playerNextMove = PlayerBounds;
 	playerNextMove.left += velocity.x;
 	playerNextMove.top += velocity.y;
 
 	Player::CheckCollision(playerNextMove.left, playerNextMove.top);
-	
+
 	body.move(velocity);
 
 	if (body.getPosition().x < 0)
@@ -78,22 +82,33 @@ void Player::MovePlayer(const float& DT)
 		body.setPosition(670 - body.getGlobalBounds().width, body.getPosition().y);
 	if (body.getPosition().y + body.getGlobalBounds().height > 670)
 		body.setPosition(body.getPosition().x, 670 - body.getGlobalBounds().height);
-	
+
 	sf::FloatRect TileBounds = this->grids->Tiles[9].getGlobalBounds();
-//	cout << TileBounds.left << " " << grids->Tiles[9].getGlobalBounds().height << " " << TileBounds.top << " " << TileBounds.width << endl;
+	//	cout << TileBounds.left << " " << grids->Tiles[9].getGlobalBounds().height << " " << TileBounds.top << " " << TileBounds.width << endl;
 }
 
-void Player::CheckCollision(float location_x,float location_y)
+void Player::CheckCollision(float location_x, float location_y)
 {
-	int index = 0;
+	SetPlayerCurrentLevel(CurrentLevel);
 	int index_x = ceil(location_x / grids->GetGridSize());
 	int index_y = ceil(location_y / grids->GetGridSize());
+	if (index == 220 || index == 380)
+	{
+		CurrentLevel++;
+		SetPlayerCurrentLevel(CurrentLevel);
+		grids->SelectLevel(CurrentLevel, 1);
+		body.setPosition(sf::Vector2f(0.f, 50.f));
+		index = 0;
+		velocity.x = 0.f;
+		velocity.y = 0.f;
+		return;
+	}
 	for (int i = 0; i < grids->GetMapSize() * grids->GetMapSize(); i++)
 	{
-		//cout << index << endl;
-
-		if(grids->levels.levelarr[i] == 1)
+		
+		if (grids->levels.levelarr[i] == 1)
 		{
+		
 			sf::FloatRect TileBounds = this->grids->Tiles[i].getGlobalBounds();
 			sf::FloatRect PlayerBounds = this->SetHitBox();
 			//cout << playerNextMove.height << " " << playerNextMove.top << endl;
@@ -109,7 +124,7 @@ void Player::CheckCollision(float location_x,float location_y)
 					velocity.y = 0.f;
 					//body.setPosition(PlayerBounds.left, TileBounds.top - PlayerBounds.height);
 				}
-				 //Top Collision
+				//Top Collision
 				else if (PlayerBounds.top > TileBounds.top && PlayerBounds.top + PlayerBounds.height > TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
 				{
 					index_x = floor(location_x / grids->GetGridSize());
@@ -136,12 +151,14 @@ void Player::CheckCollision(float location_x,float location_y)
 				}
 			}
 			index = index_x + (index_y * this->grids->GetMapSize());
+			SetPlayerGridPosition(index);
 		}
 		else if (grids->levels.levelarr[i] == 2)
 		{
 			IsDead = 0;
 		}
 		
+
 	}
 }
 
@@ -157,16 +174,42 @@ sf::Vector2f Player::GetPlayerPosition()
 
 sf::FloatRect Player::SetHitBox()
 {
-	return sf::FloatRect(body.getGlobalBounds().left , body.getGlobalBounds().top , body.getGlobalBounds().width - 5, body.getGlobalBounds().height- 3);  // Compressing the globalbounds to be collision more effective
+	return sf::FloatRect(body.getGlobalBounds().left, body.getGlobalBounds().top, body.getGlobalBounds().width - 5, body.getGlobalBounds().height - 3);  // Compressing the globalbounds to be collision more effective
 }
 
 void Player::SetView(sf::View* view)
 {
 	if (body.getPosition().x < view->getCenter().x - view->getSize().x / 2.f && body.getPosition().x < grids->Tiles->getGlobalBounds().left)
 	{
-		cout << " fd" << endl;
 		body.setPosition(sf::Vector2f(view->getCenter().x - view->getSize().x / 2.f, body.getPosition().y));
 	}
+}
+
+void Player::SetPlayerGridPosition(int index)
+{
+	PlayerGridIndex = index;
+}
+
+const int& Player::GetPlayerGridPosition() const
+{
+	// TODO: insert return statement here
+	return PlayerGridIndex;
+}
+
+void Player::SetPlayerCurrentLevel(int lev)
+{
+	this->CurrentLevel = lev;
+}
+
+void Player::SetPlayerPosition(sf::Vector2f pos)
+{
+	this->body.setPosition(pos);
+}
+
+const int& Player::GetPlayerCurrentLevel() const
+{
+	return CurrentLevel;
+	// TODO: insert return statement here
 }
 
 

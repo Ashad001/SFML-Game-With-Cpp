@@ -1,3 +1,4 @@
+
 #pragma once
 #include <iostream>
 using namespace std;
@@ -8,4 +9,3 @@ public:
 	int levelarr[400];
 	void LevelSelect(int x);
 };
-

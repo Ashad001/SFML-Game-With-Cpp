@@ -1,21 +1,20 @@
 #include "Coin.h"
 Coin::Coin(float GridSize, sf::Window& window, int level) : Entity(window)
 {
-	CoinTex.loadFromFile("Textures/Coin.png");
+	CoinTex.loadFromFile("Coin.png");
 	CoinTex.setSmooth(true);
 	this->body.setTexture(this->CoinTex);
-	this->body.setScale(0.32f, 0.32f);
-	this->grids->SetGrid();
+	this->counter = 0;
 }
 
-void Coin::CheckCollision(float location_x, float location_y)
+void Coin::CheckCollision(Player &player, float location_x, float location_y)
 {
 	int index = 0;
 	int index_x = ceil(location_x / grids->GetGridSize());
 	int index_y = ceil(location_y / grids->GetGridSize());
 	for (int i = 0; i < grids->GetMapSize() * grids->GetMapSize(); i++)
 	{
-		if (Coin.GetPlacement() == Player.GetPlayerPosition())
+		if (GetPlacement() == player.GetPlayerPosition())
 		{
 			counter += 1;
 		}

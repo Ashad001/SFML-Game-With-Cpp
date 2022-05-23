@@ -5,17 +5,14 @@ Enemy::Enemy(float GridSize, sf::Window& window, sf::Vector2f pos)
 {
 	this->e_win = &window;
 	grids = new Grid;
-	enemyTex.loadFromFile("Enemy2.png");
-	
+	enemyTex.loadFromFile("Textures/Enemy2.png");
+
 	enemyTex.setSmooth(true);
 	this->body.setTexture(this->enemyTex);
 	this->body.setPosition(pos);
 	this->body.setScale(0.5f, 0.5f);
 	this->grids->SetGrids(); //parameter chahye hoga
 	this->enemy_animation = new Animation(&enemyTex, sf::Vector2u(3, 1), 0.3f);
-	
-	
-
 }
 
 void Enemy::Draw(sf::RenderWindow& e_window)

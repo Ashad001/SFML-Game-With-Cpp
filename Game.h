@@ -22,14 +22,15 @@ private:
 	sf::Event EVNT;
 	sf::Clock DTClock;
 	float DeltaTime;
-	Grid *grids;
+	Grid* grids;
 	Player* player;
 	vector<Enemy> enemies;
+	int LEVEL;
 
-	int moves;   
+	int moves;
 	//int EnemyCount; // Optimzed
-	
-	
+
+
 	// Private Setters
 	void SetWindow();
 public:

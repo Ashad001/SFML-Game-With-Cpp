@@ -1,10 +1,13 @@
 #include <conio.h>
-#include "Game.h"
+#include "MainMenu.h"
 int main()
 {
-	Game Amazer;
-	Amazer.Run();
+	MainMenu Amazer(800, 640);
+	Amazer.Update();
+
 }
+
+
 
 //#include <iostream>
 //#include <fstream>

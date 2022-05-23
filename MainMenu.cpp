@@ -1,11 +1,11 @@
 #include "MainMenu.h"
 
 MainMenu::MainMenu(float width, float height) {
-	if (!font.loadFromFile("UniversCondensed.ttf"))
+	if (!font.loadFromFile("MenuFont.ttf"))
 	{
-		cout << "Font Avalaible..!";
+		cout << "Font Not Avalaible..!";
 	}
-	
+
 	//Play Button
 	mainMenu[0].setFont(font);
 	mainMenu[0].setFillColor(sf::Color::White);
@@ -47,12 +47,12 @@ void MainMenu::draw(sf::RenderWindow& window) {
 
 //MoveUp
 void MainMenu::MoveUp() {
-	if (MainMenuSelected-1>=0)
+	if (MainMenuSelected - 1 >= 0)
 	{
 		mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
 		MainMenuSelected--;
 
-		if (MainMenuSelected==-1)
+		if (MainMenuSelected == -1)
 		{
 			MainMenuSelected = 2;
 		}
@@ -63,12 +63,12 @@ void MainMenu::MoveUp() {
 //MoveDown
 
 void MainMenu::MoveDown() {
-	if (MainMenuSelected+1<=Max_main_menu)
+	if (MainMenuSelected + 1 <= Max_main_menu)
 	{
 		mainMenu[MainMenuSelected].setFillColor(sf::Color::White);
 		MainMenuSelected++;
 
-		if (MainMenuSelected==Max_main_menu)
+		if (MainMenuSelected == Max_main_menu)
 		{
 			MainMenuSelected = 0;
 		}
@@ -76,16 +76,24 @@ void MainMenu::MoveDown() {
 	}
 }
 
-void MainMenu::Update(){
+int MainMenu::MainMenuPressed()
+{
+	return MainMenuSelected;
+}
+
+
+void MainMenu::Update()
+{
 	sf::RenderWindow MENU(sf::VideoMode(800, 600), "Main Menu", sf::Style::Default);
 	MainMenu mainMenu(MENU.getSize().x, MENU.getSize().y);
 
 	sf::RectangleShape Background;
 	Background.setSize(sf::Vector2f(800, 600));
 	sf::Texture MainTexture;
-	MainTexture.loadFromFile("ground.jpg");
+	MainTexture.loadFromFile("ground.png");
 	Background.setTexture(&MainTexture);
-	Game* Amazer;
+	int GameOn = 0;
+
 	while (MENU.isOpen())
 	{
 		sf::Event event;
@@ -113,10 +121,8 @@ void MainMenu::Update(){
 					int x = mainMenu.MainMenuPressed();
 					if (x == 0)
 					{
-						Amazer = new Game();
+						GameOn = 1;
 						MENU.clear();
-						Amazer.UpdateEvents();
-						Amazer.Run();
 						if (event.key.code == sf::Keyboard::Escape) {
 							MENU.clear();
 							MENU.draw(Background);
@@ -129,17 +135,29 @@ void MainMenu::Update(){
 					}
 					if (x == 2)
 					{
-
 						if (x == 3)
 						{
 							MENU.close();
 						}
 					}
+					
 				}
+			}
+			if (GameOn == 1)
+			{
+				Game game;
+				GameOn = 0;
+				game.Run();
 			}
 			MENU.clear();
 			MENU.draw(Background);
 			mainMenu.draw(MENU);
 			MENU.display();
 		}
+	}
+	
+
 }
+
+
+	

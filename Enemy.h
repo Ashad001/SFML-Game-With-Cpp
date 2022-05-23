@@ -12,8 +12,8 @@ private:
 	Grid* grids;
 	sf::Texture enemyTex;
 	sf::Sprite body;
-	Animation *enemy_animation;
-	
+	Animation* enemy_animation;
+
 public:
 	Enemy(float GridSize, sf::Window& window, sf::Vector2f pos);
 	sf::FloatRect SetHitBox();

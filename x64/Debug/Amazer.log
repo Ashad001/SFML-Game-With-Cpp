@@ -1,0 +1,2 @@
+﻿  Main.cpp
+D:\Amazer\Amazer\Main.cpp(9,10): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory

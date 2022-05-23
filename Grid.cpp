@@ -1,6 +1,6 @@
 #include "Grid.h"
 
-void Grid::SelectLevel(int level)
+void Grid::SelectLevel(int level, bool load)
 {
 	levels.LevelSelect(level);
 	for (int i = 0; i < 400; i++)
@@ -10,8 +10,15 @@ void Grid::SelectLevel(int level)
 		{
 			tempLev[i] = 0;
 		}
+		if (tempLev[i] == 6)
+		{
+			tempLev[i] = 0;
+		}
 	}
-	Map->load("Block.png", sf::Vector2u(32, 32), tempLev, 20, 20);
+	if (load == 1)
+	{
+		Map->load("Textures/Block.png", sf::Vector2u(32, 32), tempLev, 20, 20);
+	}
 
 }
 
@@ -24,12 +31,6 @@ Grid::Grid()
 	this->Location = 0;
 	//Tile
 	Map = new TileMap;
-	SelectLevel(1);
-
-	
-
-
-	
 }
 
 
@@ -44,7 +45,7 @@ void Grid::SetGrids()
 			Tiles[i + j * MapSize].setFillColor(sf::Color::Transparent);
 			Tiles[i + j * MapSize].setOutlineThickness(1.f);
 			Tiles[i + j * MapSize].setOutlineColor(sf::Color::Green);
-		//	cout << Tiles[i + j * MapSize].getGlobalBounds().left << " " << Tiles[i + j * MapSize].getGlobalBounds().top << " " << Tiles[i + j * MapSize].getGlobalBounds().width << " " << Tiles[i + j * MapSize].getGlobalBounds().height << endl;
+			//	cout << Tiles[i + j * MapSize].getGlobalBounds().left << " " << Tiles[i + j * MapSize].getGlobalBounds().top << " " << Tiles[i + j * MapSize].getGlobalBounds().width << " " << Tiles[i + j * MapSize].getGlobalBounds().height << endl;
 		}
 	}
 }
@@ -60,7 +61,7 @@ void Grid::DrawGrids(sf::RenderWindow& i_window)
 	}
 }
 
-	
+
 const float& Grid::GetGridSize() const
 {
 	return GridSize;
@@ -74,9 +75,11 @@ const int& Grid::GetMapSize() const
 
 
 
+
+
 int Grid::CheckCollision(float location_x, float location_y)
 {
-//	cout << Tiles->getGlobalBounds().height << " " << Tiles->getGlobalBounds().left << endl;
+	//	cout << Tiles->getGlobalBounds().height << " " << Tiles->getGlobalBounds().left << endl;
 	int index_x = floor(location_x / GridSize);
 	int index_y = floor(location_y / GridSize);
 	//cout << index_x << "   " << index_y << "  " << index_x + (index_y * this->MapSize) + 1  << endl;
@@ -86,7 +89,7 @@ int Grid::CheckCollision(float location_x, float location_y)
 	}
 	return 0;
 
-	
+
 }
 
 
@@ -95,4 +98,3 @@ Grid::~Grid()
 {
 	delete Map;
 }
-

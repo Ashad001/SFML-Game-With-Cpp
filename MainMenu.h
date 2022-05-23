@@ -1,9 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Game.h"
 
 using namespace std;
 
-#define Max_main_menu 4
+constexpr auto Max_main_menu = 4;
 class MainMenu
 {
 private:
@@ -19,9 +20,7 @@ public:
 	void MoveDown();
 
 
-	int MainMenuPressed() {
-		return MainMenuSelected;
-	}
+	int MainMenuPressed();
+
 	void Update();
 };
-

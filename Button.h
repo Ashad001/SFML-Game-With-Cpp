@@ -26,4 +26,3 @@ public:
 	void Draw(sf::RenderTarget* target);
 	int GetButtonState();
 };
-

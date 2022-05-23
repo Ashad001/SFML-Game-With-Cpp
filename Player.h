@@ -9,7 +9,7 @@ class Player : public Entity
 {
 private:
 	//sf::RectangleShape Body;
-	sf::Window *i_win;
+	sf::Window* i_win;
 	sf::Texture playerTex;
 	sf::Sprite body;
 	bool IsDead;
@@ -19,16 +19,25 @@ private:
 	// Private Functions
 	void SetClockTime();
 	bool isRight;
+	int PlayerGridIndex;
 	sf::FloatRect playerNextMove;
+	int CurrentLevel;
+	int index;
 public:
-	Player(float GridSize, sf::Window& window, int level);
+	Player(float GridSize, sf::Window& window);
 	void MovePlayer(const float& DT);
 	void CheckCollision(float location_x, float location_y);
 	void Draw(sf::RenderWindow& i_window);
 	sf::Vector2f GetPlayerPosition();
 	sf::FloatRect SetHitBox();
 	void SetView(sf::View* view);
+	void SetPlayerGridPosition(int index);
+	const int &GetPlayerGridPosition() const;
+	void SetPlayerCurrentLevel(int lev);
+	void SetPlayerPosition(sf::Vector2f pos);
+	const int &GetPlayerCurrentLevel() const;
+
+
 
 	~Player();
 };
-
