@@ -1,5 +1,4 @@
 #pragma once
-#include "Bullet.h"
 #include "Grid.h"
 #include "Player.h"
 #include <SFML/Graphics.hpp>
@@ -10,7 +9,7 @@ class Enemy
 private:
 	sf::Window* e_win;
 	Grid* grids;
-	sf::Texture enemyTex;
+	sf::Texture *enemyTex;
 	sf::Sprite body;
 	Animation* enemy_animation;
 

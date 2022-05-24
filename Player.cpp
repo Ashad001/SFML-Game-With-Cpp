@@ -16,7 +16,7 @@ Player::Player(float GridSize, sf::Window& window) : Entity(window)
 	playerTex.loadFromFile("Textures/Ghost2.png");
 	playerTex.setSmooth(true);
 	this->body.setTexture(this->playerTex);
-	this->body.setScale(0.34f, 0.34f);
+	this->body.setScale(0.305f, 0.305f);
 	this->playerAnimation = new Animation(&playerTex, sf::Vector2u(7, 2), 0.3);
 	isRight = true;
 	this->velocity = { 0.f, 0.f };
@@ -26,6 +26,9 @@ Player::Player(float GridSize, sf::Window& window) : Entity(window)
 	this->grids->SelectLevel(CurrentLevel, 0);
 	this->PlayerGridIndex = 0;
 	SetPlayerCurrentLevel(1);
+	body.setPosition(20.f, 45.f);
+	FireCollide = 0;
+	this->OnCoin = 0;
 
 }
 
@@ -92,7 +95,7 @@ void Player::CheckCollision(float location_x, float location_y)
 	SetPlayerCurrentLevel(CurrentLevel);
 	int index_x = ceil(location_x / grids->GetGridSize());
 	int index_y = ceil(location_y / grids->GetGridSize());
-	if (index == 220 || index == 380)
+	if (index == 220 || index == 380)   // Exit Points...!
 	{
 		CurrentLevel++;
 		SetPlayerCurrentLevel(CurrentLevel);
@@ -105,24 +108,23 @@ void Player::CheckCollision(float location_x, float location_y)
 	}
 	for (int i = 0; i < grids->GetMapSize() * grids->GetMapSize(); i++)
 	{
+
 		
+		sf::FloatRect PlayerBounds = this->SetHitBox();
+		sf::FloatRect TileBounds = this->grids->Tiles[i].getGlobalBounds();
 		if (grids->levels.levelarr[i] == 1)
 		{
-		
-			sf::FloatRect TileBounds = this->grids->Tiles[i].getGlobalBounds();
-			sf::FloatRect PlayerBounds = this->SetHitBox();
-			//cout << playerNextMove.height << " " << playerNextMove.top << endl;
-			//cout << PlayerBounds.left << " " << PlayerBounds.width << endl;
+			body.setColor(sf::Color::White);
 			if (TileBounds.intersects(playerNextMove))
 			{
-				//cout << (grids->CheckCollision(playerNextMove.left, playerNextMove.top));
+				FireCollide = 0;
+
 				// Bottom Collsion
 				if (PlayerBounds.top < TileBounds.top && PlayerBounds.top + PlayerBounds.height < TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
 				{
 					index_x = ceil(location_x / grids->GetGridSize());
 					index_y = floor(location_y / grids->GetGridSize());
 					velocity.y = 0.f;
-					//body.setPosition(PlayerBounds.left, TileBounds.top - PlayerBounds.height);
 				}
 				//Top Collision
 				else if (PlayerBounds.top > TileBounds.top && PlayerBounds.top + PlayerBounds.height > TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
@@ -146,18 +148,127 @@ void Player::CheckCollision(float location_x, float location_y)
 					index_x = floor(location_x / grids->GetGridSize());
 					index_y = floor(location_y / grids->GetGridSize());
 					velocity.x = 0.f;
-					//cout << PlayerBounds.left << " " << PlayerBounds.width << " " << PlayerBounds.top << " " << PlayerBounds.height << TileBounds.left << " " << TileBounds.width << " " << TileBounds.top << " " << TileBounds.height << endl;
-					//body.setPosition(TileBounds.width + TileBounds.left, PlayerBounds.top);
 				}
 			}
 			index = index_x + (index_y * this->grids->GetMapSize());
 			SetPlayerGridPosition(index);
 		}
+		else if (grids->levels.levelarr[i] == 4 && !IsDead)
+		{
+			if (TileBounds.intersects(playerNextMove))
+			{
+				if (PlayerBounds.top < TileBounds.top && PlayerBounds.top + PlayerBounds.height < TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
+				{
+					index_x = ceil(location_x / grids->GetGridSize());
+					index_y = floor(location_y / grids->GetGridSize());
+					body.setPosition(20.f, 45.f);
+					FireCollide = 1;
+				}
+				//Top Collision
+				else if (PlayerBounds.top > TileBounds.top && PlayerBounds.top + PlayerBounds.height > TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
+				{
+					index_x = floor(location_x / grids->GetGridSize());
+					index_y = ceil(location_y / grids->GetGridSize());
+					body.setPosition(20.f, 45.f);
+					FireCollide = 1;
+				}
+				// Right Collision
+				if (PlayerBounds.left < TileBounds.left && PlayerBounds.left + PlayerBounds.width < TileBounds.left + TileBounds.width && PlayerBounds.top < TileBounds.top + TileBounds.height && PlayerBounds.top + PlayerBounds.height > TileBounds.top)
+				{
+					index_x = ceil(location_x / grids->GetGridSize());
+					index_y = ceil(location_y / grids->GetGridSize());
+					body.setPosition(20.f, 45.f);
+					FireCollide = 1;
+					
+				}
+				// Left Collision
+				else if (PlayerBounds.left > TileBounds.left && PlayerBounds.left + PlayerBounds.width > TileBounds.left + TileBounds.width && PlayerBounds.top < TileBounds.top + TileBounds.height && PlayerBounds.top + PlayerBounds.height > TileBounds.top)
+				{
+					index_x = floor(location_x / grids->GetGridSize());
+					index_y = floor(location_y / grids->GetGridSize());
+					FireCollide = 1;
+					body.setPosition(20.f, 45.f);
+				}
+				
+			}
+		}
 		else if (grids->levels.levelarr[i] == 2)
 		{
-			IsDead = 0;
+			if (TileBounds.intersects(playerNextMove))
+			{
+				FireCollide = 0;
+
+				if (PlayerBounds.top < TileBounds.top && PlayerBounds.top + PlayerBounds.height < TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
+				{
+					index_x = ceil(location_x / grids->GetGridSize());
+					index_y = floor(location_y / grids->GetGridSize());
+					velocity.y = 0.f;
+					body.setPosition(20.f, 45.f);
+				}
+				//Top Collision
+				else if (PlayerBounds.top > TileBounds.top && PlayerBounds.top + PlayerBounds.height > TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
+				{
+					index_x = floor(location_x / grids->GetGridSize());
+					index_y = ceil(location_y / grids->GetGridSize());
+					velocity.y = 0.f;
+					body.setPosition(20.f, 45.f);
+				}
+				// Right Collision
+				if (PlayerBounds.left < TileBounds.left && PlayerBounds.left + PlayerBounds.width < TileBounds.left + TileBounds.width && PlayerBounds.top < TileBounds.top + TileBounds.height && PlayerBounds.top + PlayerBounds.height > TileBounds.top)
+				{
+					index_x = ceil(location_x / grids->GetGridSize());
+					index_y = ceil(location_y / grids->GetGridSize());
+					velocity.x = 0.f;
+					body.setPosition(20.f, 45.f);
+				}
+				// Left Collision
+				else if (PlayerBounds.left > TileBounds.left && PlayerBounds.left + PlayerBounds.width > TileBounds.left + TileBounds.width && PlayerBounds.top < TileBounds.top + TileBounds.height && PlayerBounds.top + PlayerBounds.height > TileBounds.top)
+				{
+					index_x = floor(location_x / grids->GetGridSize());
+					index_y = floor(location_y / grids->GetGridSize());
+					velocity.x = 0.f;
+					//cout << PlayerBounds.left << " " << PlayerBounds.width << " " << PlayerBounds.top << " " << PlayerBounds.height << TileBounds.left << " " << TileBounds.width << " " << TileBounds.top << " " << TileBounds.height << endl;
+					body.setPosition(20.f, 45.f);
+				}
+			}
 		}
-		
+		else if (grids->levels.levelarr[i] == 5)
+		{
+		OnCoin = 0;
+			if (TileBounds.intersects(playerNextMove))
+			{
+				if (PlayerBounds.top < TileBounds.top && PlayerBounds.top + PlayerBounds.height < TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
+				{
+					OnCoin = 1;
+					index_x = ceil(location_x / grids->GetGridSize());
+					index_y = floor(location_y / grids->GetGridSize());
+
+				}
+				//Top Collision
+				else if (PlayerBounds.top > TileBounds.top && PlayerBounds.top + PlayerBounds.height > TileBounds.top + TileBounds.height && PlayerBounds.left < TileBounds.left + TileBounds.width && PlayerBounds.left + PlayerBounds.width > TileBounds.left)
+				{
+					OnCoin = 1;
+					index_x = floor(location_x / grids->GetGridSize());
+					index_y = ceil(location_y / grids->GetGridSize());
+				}
+				// Right Collision
+				if (PlayerBounds.left < TileBounds.left && PlayerBounds.left + PlayerBounds.width < TileBounds.left + TileBounds.width && PlayerBounds.top < TileBounds.top + TileBounds.height && PlayerBounds.top + PlayerBounds.height > TileBounds.top)
+				{
+					OnCoin = 1;
+					index_x = ceil(location_x / grids->GetGridSize());
+					index_y = ceil(location_y / grids->GetGridSize());
+
+				}
+				// Left Collision
+				else if (PlayerBounds.left > TileBounds.left && PlayerBounds.left + PlayerBounds.width > TileBounds.left + TileBounds.width && PlayerBounds.top < TileBounds.top + TileBounds.height && PlayerBounds.top + PlayerBounds.height > TileBounds.top)
+				{
+					OnCoin = 1;
+					index_x = floor(location_x / grids->GetGridSize());
+					index_y = floor(location_y / grids->GetGridSize());
+				}
+			}
+
+		}
 
 	}
 }
@@ -174,7 +285,7 @@ sf::Vector2f Player::GetPlayerPosition()
 
 sf::FloatRect Player::SetHitBox()
 {
-	return sf::FloatRect(body.getGlobalBounds().left, body.getGlobalBounds().top, body.getGlobalBounds().width - 5, body.getGlobalBounds().height - 3);  // Compressing the globalbounds to be collision more effective
+	return sf::FloatRect(body.getGlobalBounds().left, body.getGlobalBounds().top, body.getGlobalBounds().width , body.getGlobalBounds().height - 3);  // Compressing the globalbounds to be collision more effective
 }
 
 void Player::SetView(sf::View* view)
@@ -206,9 +317,17 @@ void Player::SetPlayerPosition(sf::Vector2f pos)
 	this->body.setPosition(pos);
 }
 
+
+
 const int& Player::GetPlayerCurrentLevel() const
 {
 	return CurrentLevel;
+	// TODO: insert return statement here
+}
+
+const sf::FloatRect& Player::GetPlayerGlobalBounds() const
+{
+	return body.getGlobalBounds();
 	// TODO: insert return statement here
 }
 

@@ -1,13 +1,13 @@
-﻿  Player.cpp
-D:\Amazer\Amazer\Player.cpp(20,76): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Amazer\Amazer\Player.cpp(93,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(94,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(122,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(123,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(130,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(131,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(138,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(139,20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(146,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\Amazer\Amazer\Player.cpp(147,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  Game.cpp
+D:\Amazer\Amazer\Game.cpp(26,44): warning C4390: ';': empty controlled statement found; is this the intent?
+D:\Amazer\Amazer\Game.cpp(184,63): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+D:\Amazer\Amazer\Game.cpp(184,42): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
   Amazer.vcxproj -> D:\Amazer\Debug\Amazer.exe

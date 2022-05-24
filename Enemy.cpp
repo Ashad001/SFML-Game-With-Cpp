@@ -5,14 +5,17 @@ Enemy::Enemy(float GridSize, sf::Window& window, sf::Vector2f pos)
 {
 	this->e_win = &window;
 	grids = new Grid;
-	enemyTex.loadFromFile("Textures/Enemy2.png");
+	cout << "ENEMY" << endl;
+	enemyTex = new sf::Texture;
+	enemyTex->loadFromFile("Enemy2.png");
 
-	enemyTex.setSmooth(true);
-	this->body.setTexture(this->enemyTex);
-	this->body.setPosition(pos);
-	this->body.setScale(0.5f, 0.5f);
 	this->grids->SetGrids(); //parameter chahye hoga
-	this->enemy_animation = new Animation(&enemyTex, sf::Vector2u(3, 1), 0.3f);
+	
+	this->body.setTexture(*enemyTex);
+	this->body.setPosition(pos);
+	this->body.setScale(0.55f, 0.55f);
+	this->enemy_animation = new Animation(enemyTex, sf::Vector2u(3, 1), 0.3f);
+	SetHitBox();
 }
 
 void Enemy::Draw(sf::RenderWindow& e_window)
@@ -25,6 +28,7 @@ void Enemy::SetPosition(float x, float y)
 	body.setPosition(sf::Vector2f(x, y));
 }
 
+
 void Enemy::UpdateEnemy(float DT)
 {
 	this->enemy_animation->Update(0, DT, 1);
@@ -32,9 +36,10 @@ void Enemy::UpdateEnemy(float DT)
 }
 
 
+
 sf::FloatRect Enemy::SetHitBox()
 {
-	return sf::FloatRect(body.getGlobalBounds().left, body.getGlobalBounds().top, grids->GetGridSize(), grids->GetGridSize());
+	return body.getGlobalBounds();
 }
 
 

@@ -10,6 +10,10 @@ void Grid::SelectLevel(int level, bool load)
 		{
 			tempLev[i] = 0;
 		}
+		if (tempLev[i] == 5)
+		{
+			tempLev[i] = 0;
+		}
 		if (tempLev[i] == 6)
 		{
 			tempLev[i] = 0;

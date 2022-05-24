@@ -84,7 +84,7 @@ int MainMenu::MainMenuPressed()
 
 void MainMenu::Update()
 {
-	sf::RenderWindow MENU(sf::VideoMode(800, 600), "Main Menu", sf::Style::Default);
+	sf::RenderWindow MENU(sf::VideoMode(800, 640), "Main Menu", sf::Style::Default);
 	MainMenu mainMenu(MENU.getSize().x, MENU.getSize().y);
 
 	sf::RectangleShape Background;
@@ -116,29 +116,25 @@ void MainMenu::Update()
 					mainMenu.MoveDown();
 					break;
 				}
-				if (event.key.code == sf::Keyboard::Return || event.key.code == sf::Mouse::Left)
+				if (event.key.code == sf::Keyboard::Return)
 				{
 					int x = mainMenu.MainMenuPressed();
 					if (x == 0)
 					{
 						GameOn = 1;
 						MENU.clear();
-						if (event.key.code == sf::Keyboard::Escape) {
-							MENU.clear();
-							MENU.draw(Background);
-							mainMenu.draw(MENU);
-							MENU.display();
-						}
 					}
 					if (x == 1)
 					{
+
 					}
 					if (x == 2)
 					{
-						if (x == 3)
-						{
-							MENU.close();
-						}
+						
+					}
+					if (x == 3)
+					{
+						MENU.close();
 					}
 					
 				}
@@ -148,6 +144,12 @@ void MainMenu::Update()
 				Game game;
 				GameOn = 0;
 				game.Run();
+				if (event.key.code == sf::Keyboard::Escape) {
+					MENU.clear();
+					MENU.draw(Background);
+					mainMenu.draw(MENU);
+					MENU.display();
+				}
 			}
 			MENU.clear();
 			MENU.draw(Background);

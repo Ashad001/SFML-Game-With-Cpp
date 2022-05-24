@@ -10,6 +10,7 @@
 #include "Grid.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Coin.h"
 
 using namespace std;
 
@@ -24,12 +25,27 @@ private:
 	float DeltaTime;
 	Grid* grids;
 	Player* player;
-	vector<Enemy> enemies;
+	vector<std::shared_ptr<Enemy>> enemies;
+	Enemy* tempenm;
+	sf::Font font;
+	sf::Text text;
+
+
+	vector<std::shared_ptr<Coin>> coins;
+	Coin* tempCoin;
+	int CoinsCollected;
+
 	int LEVEL;
 
 	int moves;
 	//int EnemyCount; // Optimzed
 
+	// Sounds
+	sf::Music Intro;
+	sf::SoundBuffer CoinBuffer;
+	sf::Sound CoinSound;
+	sf::SoundBuffer EnemyKill;
+	sf::Sound EnemySound;
 
 	// Private Setters
 	void SetWindow();
@@ -38,12 +54,12 @@ public:
 	Game();
 	virtual ~Game();
 
-	void SetEntites();
+	void SetEntites(bool PlayerGenerate);
 	// Public Functions / Setters
 	void UpdateEvents();
 	void UpdateDT();
 	void Update();
 	void Render();
 	void Run();
-
+	void DeleteEntities(); // Except Enemy..!
 };

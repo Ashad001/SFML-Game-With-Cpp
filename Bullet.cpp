@@ -2,11 +2,16 @@
 Bullet::Bullet(float x, float y) {
 	SetBulletSize(x, y);
 }
+Bullet::Bullet() {};
 void Bullet::fire(int speed) { //and in radius
 	Bullet newBull(50, 5);
 	//newBull.SetBulletPosition(); //player ki position
 	bulletVec.push_back(newBull);
 	newBull.moving(speed);
+}
+int Bullet::getspeed(int speed) {
+	this->speed == speed;
+	return speed;
 }
 int Bullet::getright() {
 	return bullet.getPosition().x + bullet.getSize().x;

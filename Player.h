@@ -4,7 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Entity.h"
+#include <vector>
+#include <Windows.h>
+#include <cstdlib>
+
+using namespace std;
 class Player : public Entity
 {
 private:
@@ -12,7 +18,7 @@ private:
 	sf::Window* i_win;
 	sf::Texture playerTex;
 	sf::Sprite body;
-	bool IsDead;
+	
 	Animation* playerAnimation;
 	float PlayerMovementSpeed;
 	sf::Vector2f velocity;
@@ -23,7 +29,12 @@ private:
 	sf::FloatRect playerNextMove;
 	int CurrentLevel;
 	int index;
+	
 public:
+	bool OnCoin;
+	bool IsDead;
+	int FireCollide;
+
 	Player(float GridSize, sf::Window& window);
 	void MovePlayer(const float& DT);
 	void CheckCollision(float location_x, float location_y);
@@ -36,6 +47,9 @@ public:
 	void SetPlayerCurrentLevel(int lev);
 	void SetPlayerPosition(sf::Vector2f pos);
 	const int &GetPlayerCurrentLevel() const;
+
+	const sf::FloatRect& GetPlayerGlobalBounds() const;
+
 
 
 

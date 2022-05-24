@@ -3,17 +3,42 @@
 void Game::SetWindow()
 {
 	this->Window = new sf::RenderWindow(sf::VideoMode(800, 640), "OOP-PROJECT");
-	this->Camera = new sf::View(sf::Vector2f(0, 0), sf::Vector2f(600, 480)); // This is centre and size of the camera but will be updated later
+	this->Camera = new sf::View(sf::Vector2f(0, 0), sf::Vector2f(400, 320)); // This is centre and size of the camera but will be updated later
 	this->Window->setFramerateLimit(120);
 }
-Game::Game()
+Game::Game() 
 {
 	this->LEVEL = 1;
 	SetWindow();
 	grids = new Grid;
 	grids->SetGrids();
-	SetEntites();
 	grids->SelectLevel(LEVEL,1);
+	this->CoinsCollected = 0;
+	if (!font.loadFromFile("MenuFont.ttf"))
+	{
+		cout << "Font Not Avalaible..!";
+	}
+	
+	if (!CoinBuffer.loadFromFile("CoinSound.wav"))
+	{
+		cout << "Sound Not Loaded" << endl;
+	}
+	if (!Intro.openFromFile("Background.ogg"));
+	{
+		cout << "Music Not Loaded" << endl;
+	}
+	CoinSound.setBuffer(CoinBuffer);
+
+	Intro.play();
+	Intro.setLoop(1);
+
+	if (!EnemyKill.loadFromFile("EnemyKill.wav"))
+	{
+		cout << "Enemy Sound Not Loaded" << endl;
+	}
+	EnemySound.setBuffer(EnemyKill);
+
+	SetEntites(1);
 }
 
 Game::~Game()
@@ -21,27 +46,41 @@ Game::~Game()
 	delete this->Window;
 	delete this->grids;
 	delete this->player;
-	for (int i = 0; i < enemies.size(); i++)
-	{
-		enemies.pop_back();
-	}
+	DeleteEntities();
 }
 
-void Game::SetEntites()
+void Game::SetEntites(bool PlayerGenerate)
 {
-	player = new Player(this->grids->GetGridSize(), *Window);
-	
+	if(PlayerGenerate)
+		player = new Player(this->grids->GetGridSize(), *Window);
+		
+	tempenm = new Enemy(grids->GetGridSize(), *Window, sf::Vector2f(0.f, 0.f));
+	tempCoin = new Coin(*Window, sf::Vector2f(0.f, 0.f));
+	this->player->IsDead = 0;
 	for (int i = 0; i < 20; i++)
 	{
 		for (int j = 0; j < 20; j++)
 		{
 			if (grids->levels.levelarr[i + j * 20] == 4)
 			{
-				Enemy* tempenm = new Enemy(grids->GetGridSize(), *Window, sf::Vector2f(i * grids->GetGridSize(), j * grids->GetGridSize()));
-				enemies.push_back(*tempenm);
+				tempenm->SetPosition(i * grids->GetGridSize(), j * grids->GetGridSize());
+				enemies.push_back(std::make_shared <Enemy>(*tempenm));
+			}
+			else if (grids->levels.levelarr[i + j * 20] == 5)
+			{
+				tempCoin->SetPosition(sf::Vector2f(i * grids->GetGridSize(), j * grids->GetGridSize()));
+				coins.push_back(std::make_shared <Coin>(*tempCoin));
 			}
 		}
+
 	}
+	this->text.setFont(font);
+	this->text.setFillColor(sf::Color::White);
+	this->text.setString("Level" + to_string(player->GetPlayerCurrentLevel()));
+	this->text.setCharacterSize(70);
+	this->text.setLetterSpacing(14.f);
+	this->text.setOutlineColor(sf::Color::Red);
+	this->text.setPosition(100.f, 10.f);
 }
 
 void Game::UpdateEvents()
@@ -73,17 +112,46 @@ void Game::UpdateDT()
 void Game::Update()
 {
 	UpdateEvents();
+
 	int preLevel = player->GetPlayerCurrentLevel();
 	this->player->MovePlayer(this->DeltaTime);
-	for (int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < enemies.size(); i++)
 	{
-		enemies[i].UpdateEnemy(this->DeltaTime);
+		enemies[i]->UpdateEnemy(this->DeltaTime);
 	}
-	cout << grids->levels.levelarr[player->GetPlayerGridPosition()] << endl;
+	for (unsigned int i = 0; i < coins.size(); i++)
+	{
+		coins[i]->UpdateCoin(this->DeltaTime);
+	}
 	if (preLevel != player->GetPlayerCurrentLevel())
 	{
 		grids->SelectLevel(player->GetPlayerCurrentLevel(), 1);
+		DeleteEntities();
+		SetEntites(0);
 	}
+	for (unsigned short i = 0; i < enemies.size(); i++)
+	{
+		if (player->FireCollide == 1)
+		{
+			EnemySound.play();
+			this->player->IsDead = 1;
+			enemies.erase(enemies.begin() + i);
+			break;
+		}
+	}
+	for (unsigned short i = 0; i < coins.size(); i++)
+	{
+		if (player->OnCoin == true)
+		{
+			CoinSound.play();
+			player->OnCoin = 0;
+			CoinsCollected++;
+			coins.erase(coins.begin() + i);
+			break;
+		}
+	}
+
+	
 }
 
 void Game::Render()
@@ -91,12 +159,17 @@ void Game::Render()
 	this->Window->clear(sf::Color::Black);
 	// Render / Drawing
 	this->grids->DrawGrids(*Window);
-	for (int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < coins.size(); i++)
 	{
-		enemies[i].Draw(*Window);
+		coins[i]->Draw(*this->Window);
+	}
+	for (unsigned int i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->Draw(*Window);
 	}
 	this->player->Draw(*Window);
-	this->Window->display();
+
+	
 }
 
 void Game::Run()
@@ -107,10 +180,27 @@ void Game::Run()
 		this->Update();
 		this->Camera->setCenter(player->GetPlayerPosition());
 		this->player->SetView(Camera);
-		//	this->Camera->setSize(Window->getSize().x, Window->getSize().y);
+		this->Camera->setSize(Window->getSize().x, Window->getSize().y);
 		this->Window->setView(*Camera);
 		this->Render();
-
+		this->Window->getDefaultView();
+		this->Window->draw(text);
+		this->Window->display();
 
 	}
+}
+
+void Game::DeleteEntities()
+{
+	
+	for (unsigned int i = 0; i < enemies.size(); i++)
+	{
+		enemies.erase(enemies.begin() + i);
+	}
+	for (unsigned int i = 0; i < coins.size(); i++)
+	{
+		coins.pop_back();
+	}
+	
+
 }

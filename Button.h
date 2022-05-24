@@ -19,10 +19,10 @@ private:
 
 public:
 	Button(sf::Vector2f Position, sf::Vector2f Size, sf::Font* font, string Text, sf::Color IdleColor, sf::Color HoverColor, sf::Color PressColor);
-	Button();
+	
 	~Button();
 
-	void Check(sf::Vector2f MousePosition);
-	void Draw(sf::RenderTarget* target);
+	void Check();
+	void Draw(sf::RenderWindow* target);
 	int GetButtonState();
 };
