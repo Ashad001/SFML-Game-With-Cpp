@@ -2,6 +2,7 @@
 
 void Game::SetWindow()
 {
+	Playing.SetName();
 	this->Window = new sf::RenderWindow(sf::VideoMode(800, 640), "OOP-PROJECT");
 	this->Camera = new sf::View(sf::Vector2f(0, 0), sf::Vector2f(400, 320)); // This is centre and size of the camera but will be updated later
 	this->Window->setFramerateLimit(120);
@@ -43,6 +44,7 @@ Game::Game()
 
 Game::~Game()
 {
+	Playing.Writing(Playing);
 	delete this->Window;
 	delete this->grids;
 	delete this->player;
@@ -146,6 +148,7 @@ void Game::Update()
 			CoinSound.play();
 			player->OnCoin = 0;
 			CoinsCollected++;
+			Playing.SetCoin(CoinsCollected);
 			coins.erase(coins.begin() + i);
 			break;
 		}
@@ -180,7 +183,7 @@ void Game::Run()
 		this->Update();
 		this->Camera->setCenter(player->GetPlayerPosition());
 		this->player->SetView(Camera);
-		this->Camera->setSize(Window->getSize().x, Window->getSize().y);
+		//this->Camera->setSize(Window->getSize().x, Window->getSize().y);
 		this->Window->setView(*Camera);
 		this->Render();
 		this->Window->getDefaultView();
@@ -201,6 +204,4 @@ void Game::DeleteEntities()
 	{
 		coins.pop_back();
 	}
-	
-
 }

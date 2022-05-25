@@ -1,5 +1,5 @@
 #include "MainMenu.h"
-
+#include <stdlib.h>
 MainMenu::MainMenu(float width, float height) {
 	if (!font.loadFromFile("MenuFont.ttf"))
 	{
@@ -16,14 +16,14 @@ MainMenu::MainMenu(float width, float height) {
 	//Option Button
 	mainMenu[1].setFont(font);
 	mainMenu[1].setFillColor(sf::Color::White);
-	mainMenu[1].setString("Options");
+	mainMenu[1].setString("Scores");
 	mainMenu[1].setCharacterSize(70);
 	mainMenu[1].setPosition(330, 200);
 
 	//About Button
 	mainMenu[2].setFont(font);
 	mainMenu[2].setFillColor(sf::Color::White);
-	mainMenu[2].setString("About");
+	mainMenu[2].setString("Setup");
 	mainMenu[2].setCharacterSize(70);
 	mainMenu[2].setPosition(330, 300);
 
@@ -93,7 +93,7 @@ void MainMenu::Update()
 	MainTexture.loadFromFile("ground.png");
 	Background.setTexture(&MainTexture);
 	int GameOn = 0;
-
+	FileUpdation F1;
 	while (MENU.isOpen())
 	{
 		sf::Event event;
@@ -103,34 +103,63 @@ void MainMenu::Update()
 			{
 				MENU.close();
 			}
-			if (event.type == sf::Event::KeyReleased || event.type == sf::Event::MouseMoved)
+			if (event.type == sf::Event::KeyPressed)
 			{
-				sf::Mouse::setPosition(sf::Vector2i(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y));
 				if (event.key.code == sf::Keyboard::Up)
 				{
 					mainMenu.MoveUp();
+					system("cls");
 					break;
 				}
 				if (event.key.code == sf::Keyboard::Down)
 				{
 					mainMenu.MoveDown();
+					system("cls");
 					break;
 				}
-				if (event.key.code == sf::Keyboard::Return)
+				if (event.key.code == sf::Keyboard::Enter)
 				{
 					int x = mainMenu.MainMenuPressed();
 					if (x == 0)
 					{
-						GameOn = 1;
-						MENU.clear();
+						GameOn = 1; MENU.clear();
+						MENU.draw(Background);
+						mainMenu.draw(MENU);
+						MENU.display();
 					}
 					if (x == 1)
 					{
+						
+						ifstream Dfile("Data.bin");
+						while (!Dfile.eof())
+						{
+							fflush(stdin);
+							Dfile.read((char*)&F1, sizeof(F1));
+							fflush(stdin);
+							if (!Dfile.eof())
+							{
+								F1.Display();
+							}
+						}
+						Dfile.close();
+					
 
 					}
 					if (x == 2)
 					{
-						
+						string txt;
+						ifstream Ofile("Readme.txt");
+						while (!Ofile.eof())
+						{
+							fflush(stdin);
+							getline(Ofile, txt);
+							fflush(stdin);
+							if (!Ofile.eof())
+							{
+								cout << txt << endl;
+							}
+						}
+						Ofile.close();
 					}
 					if (x == 3)
 					{

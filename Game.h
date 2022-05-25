@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Coin.h"
+#include "FileUpdation.h"
 
 using namespace std;
 
@@ -38,6 +39,8 @@ private:
 	int LEVEL;
 
 	int moves;
+
+	FileUpdation Playing;
 	//int EnemyCount; // Optimzed
 
 	// Sounds
